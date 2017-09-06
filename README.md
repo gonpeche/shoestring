@@ -177,3 +177,97 @@ Trabaja una `<section>` a la vez y tratá lo mejor que puedas de hacer que el si
 #### Página de Contacto
 
 ![contact](contact.png)
+
+
+## Setup Responsivo
+
+### ¿Qué es el Layout Responsivo?
+
+**NOTA:** asegurate de hacer `git commit -m` en tu actual proyecto Shoestring antes de continuar.
+
+---
+ 
+Re-dimensioná la ventana del browser y notá algunos de los problemas de diseño que ocurren en una dimensión de la ventana más pequeña. 
+
+- ¿Tus ítems del "Porfolio" cambian agradablemente de tamaño?
+- ¿Cambian de un layout de 2-columnas a uno de 1-columna cuándo el ancho de la pantalla se hace más pequeño?
+- ¿Qué onda con los font-size? ¿Hay alguno qué sea muy grande o muy chico? 
+
+---
+
+En la parte 1 de Shoestring construimos un framework CSS funcional. Ahora vamos a tomar un paso más y hacer el layout responsivo. Para refrescar sobre responsive CSS, [lee esta guía](http://adamkaplan.me/grid/).  y diseño mobile-first son dos lados de la misma moneda; es todo sobre dar al usuario final la mejor experiencia para su tamaño de ventana.
+
+Visitá el [template original](http://blackrockdigital.github.io/startbootstrap-modern-business/) que estábamos tratando de replicar y trata de variar los tamaños ahí. Vas a notar que el diseño de la página se adapta agradablemente. Nuestro objetivo va a ser replicar esos cambios en nuestro propio framework.
+
+
+### Git Branches
+
+Esperemos que tu compañero y vos estuvieron practicando algo de colaboración básica con Git pusheando y pulleando a Github.
+
+Como mencionamos antes, pushear directamente al master branch puede ser problemático. Si dos personas editan el mismo archivo, merge conflicts pueden aparecer y causar dificultades. Una aproximación mas ordenada es usar branches - versiones paralelas e independientes del tu repo. Commitear a un branch significa que el master branch se mantiene a salvo. Cuando estas listo para hacer un merge de tus cambios a master, tenés que asegurarte primero que tu branch está al día con el trabajo de otras personas. Merge conflicts ocurren en branches aislados, mientras que el master branch debería (en teoría) nunca tener merge conflicts.
+
+---
+
+Configuremos una responsive branch para Shoestring ahora. 
+```sh
+$ git checkout -b responsive
+```
+
+El comando `git checkout -b responsive` es una abreviatura para los dos comandos `git branch responsive` y `git checkout responsive`. Esto crea una nueva branch llamada `responsive` y lo cambia a el. Una vez que hayas terminado tu trabajo en esta branch, podés cambiar devuelta a master y merger tu nuevo código de responsive.
+
+
+### Actualizá la Vista
+
+Antes de continuar, necesitamos asegurarnos nuestro HTML por si mismo esta configurado para usar las clases responsivas. Cambiá `home.html` a [este gist](https://gist.github.com/guilleasz/2c0f937b0f5a5ade88abae21346a8615). Fijate en el markup los "rows" de tu HTML; vas a ver los atributos como `col-lg-4` `col-md-6` `col-sm-12`. Esto es la estructura de clases del grid de Bootstrap. El esquema de nombrado tiene un significado específico:
+
+- `col-lg-4`: Cuando la pantalla sea de tamaño grande(lg), el ancho de la columna debería ser 4 unidades del grid (un tercio).
+- `col-md-6`: Cuando la pantalla sea de tamaño mediano(md), el ancho de la columna debería ser de 6 unidades del grid (un medio).
+- `col-sm-12`: Cuando la pantalla sea de tamaño pequeño(sm), el ancho de la columna debería ser de 12 unidades del grid (un entero).
+
+
+## Ejercicio responsive
+
+### Escribí el Branch Responsive
+
+Hagamos un nuevo archivo llamado `media-queries.scss`. Este archivo debería ser importado a tu `shoestring.scss`, pero al final del archivo para asegurarte una cascada correcta. Recuerda que la última regla CSS declarada va a sobrescribir cualquier regla previa que afecte un elemento.
+
+```css
+/* el resto del archivo shoestring.scss */
+
+@import 'media-queries';
+```
+
+¿Cómo podés definir las clases responsive de tal manera que apliquen al tamaño de pantalla correcto? Mirá como hacer [media queries en Sass](http://thesassway.com/intermediate/responsive-web-design-in-sass-using-media-queries-in-sass-32). También aquí hay un [tutorial](https://www.smashingmagazine.com/2011/01/guidelines-for-responsive-web-design/) bien escrito y detallado sobre diseño web responsive que debería ayudar.
+
+Agregá las clases necesarias a tu archivo `media-queries` para hacer Shoestring un framework responsive.
+
++++SCSS y media queries
+Considerá crear un @mixin que utilice tu columna @for para dinamicamente crear el tamaño de cada columna (i.e. xs, sm, md y lg). Una vez que te sientas capaz de hacer eso, mira como podés incorporar @each para hacer esto media queries aun más cortos.
++++
+
+
+### Pull Requests
+
+Una vez que tengas un framework CSS responsivo funcionando, asegurate de hacer `git commit` del responsive branch. Ahora vamos a querer hacer merge de estos cambios devuelta a la master branch.
+
+Podríamos simplemente `git checkout master` y luego usar `git merge responsive`. Sin embargo, eso no sería muy responsable en un equipo. Una procedimiento más civilizado es enviar un pull request en GitHub. Esto señala que tenés trabajo que querés pullear al proyecto principal, y creas un espacio a otros para:
+
+- Comentar en request y preguntar dudas
+- Repasar las diferencias entre tu branch y el branch al cual querés hacer merge
+- Fijarse si la branch puede hacer un merge automáticamente (sin conflictos)
+
+---
+
+Hagamos un request ahora. Primero, vamos a necesitar hacer un `git push` a nuestra branch en GitHub, ¿Pero cómo hacemos un push a un branch y no a master?
+
+```sh
+$ git push origin responsive
+```
+
+Luego visitá tu proyecto en GitHub. Deberías ver una nota en el medio de la página al efecto de que la branch responsive fue recientemente publicada, y que podes compararla & hacer un pull request. Presioná ese botón para ser llevado al formulario del pull request. 
+
+Cuando crees el pull request, asegurate que estés comparando tu fork de Shoestring master branch a tu responsive branch, y no al original Shoestring master branch de atralice a tu responsive branch. Usá el menú desplegable para cambiar el base fork al master branch de tu fork.
+
+Nota la notificación verde "Able to merge" a la derecha. Luego, crea un pull request (botón verde a la derecha), y hacé que tu compañero haga el merque del request (botón verde abajo). Ahora que el branch ha sido mergeado, no es más necesario. Así que usa el botón _delete branch_ para removerlo.
+
+Finalmente, usa `git checkout master` y `git pull` en tu maquina local para ver los resultados de tu arduo trabajo. Tus cambios han sido mergeados a master
