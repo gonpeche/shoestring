@@ -1,6 +1,7 @@
 @import "normalize";
 @import "modern-business";
 
+
 * {
   box-sizing: border-box;
 }
@@ -13,3 +14,16 @@ body {
   }
 }
 
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  clear: both;
+}
+.row {
+  clear: both;
+}
+
+@for $i from 1 through 12 {
+  .col-lg-#{$i} { width: percentage($i/12); float:left}
+}
