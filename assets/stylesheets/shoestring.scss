@@ -1,5 +1,7 @@
 @import "normalize";
 @import "modern-business";
+@import "grid";
+@import "form";
 
 
 * {
@@ -25,5 +27,7 @@ body {
 }
 
 @for $i from 1 through 12 {
-  .col-lg-#{$i} { width: percentage($i/12); float:left}
+  .col-lg-#{$i} { 
+    width: percentage($i/12); float:left;
+  }
 }
